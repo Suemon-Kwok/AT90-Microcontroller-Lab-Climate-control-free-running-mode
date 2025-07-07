@@ -20,7 +20,8 @@ Write a C program for the AT90 that accomplishes the following tasks:
  *
 *	Created: 27/03/2025 12:04:30 pm
 *	Author : 
- */ 
+
+*/ 
 #define F_CPU 8000000L
 
 #include <avr/io.h>
