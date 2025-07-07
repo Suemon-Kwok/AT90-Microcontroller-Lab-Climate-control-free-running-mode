@@ -28,14 +28,22 @@ Write a C program for the AT90 that accomplishes the following tasks:
 #include <util/delay.h>
 
 // Function to initialize ADC
+
 /*
 *ADC Initialization (ADC_init)
+
 *The ADC reference voltage is set to AVCC (5V).
+
 *The ADC is set to free-running mode, meaning it continuously samples data.
+
 *The prescaler is set to 128, which is needed for an 8 MHz clock to achieve a stable ADC conversion.
+
 *The ADC input is set to ADC2, meaning it reads values from the potentiometer connected to that channel.
+
 *The ADC is configured to 8-bit resolution, using left-adjusted results.
+
 *The ADC conversion starts immediately
+
 */
 void ADC_init() {
 
@@ -44,29 +52,44 @@ void ADC_init() {
 // Set ADC to free running mode
 
 // Enable ADC, set prescaler to 128 for 16MHz clock
+
 ADCSRA = (1 << ADEN) | (1 << ADATE) | (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
+
 // Select ADC2 (potentiometer 1)
+
 ADMUX &= ~(0x1F);  // Clear previous channel selection
+
 ADMUX |= 2;        // Select ADC2
 
 // Set 8-bit resolution (left-adjusted result)
+
 ADMUX |= (1 << ADLAR);
 
 // Start first conversion
+
 ADCSRA |= (1 << ADSC);
 }
+
 /*
+
 *Main Function (main)
+
 *PORTC is configured as output, controlling LEDs.
+
 *Initially, all LEDs are turned on (PORTC = 0xFF).
+
 *The ADC is initialized to start free-running mode.
+
 *The while loop continuously reads values from the ADC and adjusts the LEDs accordingly.
+
 */ int main() {
 
 // Configure PORTC as output for LEDs
+
 DDRC = 0xFF;  // Set all PORTC pins as outputs
 
 // Initialize all LEDs on
+
 PORTC = 0xFF;
 
 // Initialize ADC ADC_init();
@@ -88,6 +111,7 @@ PORTC >>= 1;
 // Ensure at least one LED remains on if (PORTC == 0x00) {
 PORTC = 0x01;  // Keep rightmost LED on
 }
+
 } else {
 
 // Potentiometer decreased - turn on LEDs from right to left
